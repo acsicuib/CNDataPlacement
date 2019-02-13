@@ -70,7 +70,7 @@ def initializeRandom(seed_):
 #****************************************************************************************************
 #Generacion de la topologia de red
 #****************************************************************************************************
-def networkModel(filePrefix):
+def networkModel(filePrefix,cloudLocation_):
     
     #TOPOLOGY GENERATION
     
@@ -140,11 +140,19 @@ def networkModel(filePrefix):
     gatewaysDevices = set()
     cloudgatewaysDevices = set()
     
-    highestCentrality = centralityValues[0][1]
     
-    for device in centralityValues:
-        if device[1]==highestCentrality:
-            cloudgatewaysDevices.add(device[0])
+    if cloudLocation_ == "inthemiddleofthenight":
+        print "CLOUD LOCATION in the middle"
+        highestCentrality = centralityValues[0][1]
+        
+        for device in centralityValues:
+            if device[1]==highestCentrality:
+                cloudgatewaysDevices.add(device[0])
+    elif cloudLocation_ == "countryside":
+        print "CLOUD LOCATION in the edges"
+        cloudgatewaysDevices.add(centralityValues[-1][0])
+    else:
+        print "ERROR: NO CLOUD LOCATION DEFINED"
     
     gatewaysDevicesDistance = [[0 for col in range(len(G.nodes))] for row in range(len(G.nodes))]
     

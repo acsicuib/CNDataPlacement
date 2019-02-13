@@ -583,6 +583,13 @@ if __name__ == '__main__':
         default="twolevel",
         help='Indicates the type of distribution for the users/sensors')
 
+    parser.add_argument(
+        '--cloudlocation',
+        type=str,
+        #default="inthemiddleofthenight",
+        default="countryside",
+        help='Indicates the type of distribution for the users/sensors')
+
 
     args, pipeline_args = parser.parse_known_args()
 
@@ -590,6 +597,7 @@ if __name__ == '__main__':
     userLocation = args.userlocation
     edgeWeight = args.edgeweight
     netTopology = args.topology
+    cloudLocation = args.cloudlocation
 
     datestamp = args.work_dir
 
@@ -624,6 +632,8 @@ if __name__ == '__main__':
     f.write("--edgeweight " + args.edgeweight)
     f.write("\n")
     f.write("--topology " + args.topology)
+    f.write("\n")
+    f.write("--cloudlocation " + args.cloudlocation)
     f.close() 
 
 
@@ -678,7 +688,8 @@ if __name__ == '__main__':
         
         
         domainConfiguration.initializeRandom(25)
-        domainConfiguration.networkModel(jsonfolder+'/f'+str(numFiles)+'n'+str(numNodes)+'-')
+        domainConfiguration.networkModel(jsonfolder+'/f'+str(numFiles)+'n'+str(numNodes)+'-',
+                                         cloudLocation)
         domainConfiguration.initializeRandom(133)
         if userLocation == "concentrated":
             print "NEW USER LOCATION - Concentrated"
